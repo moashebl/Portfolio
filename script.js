@@ -446,7 +446,7 @@ if (projectModal) {
   const ctx = canvas.getContext('2d');
 
   const CFG = {
-    nodeCount: 110, connectionRange: 220, mouseRadius: 200,
+    nodeCount: window.innerWidth < 768 ? 40 : 110, connectionRange: 220, mouseRadius: 200,
     mouseForce: 0.15, driftSpeed: 1.0, maxVel: 2.5,
     rMin: 1.5, rMax: 3, friction: 0.995, jitter: 0.05,
     bg: '#0B0D12',
@@ -471,7 +471,12 @@ if (projectModal) {
       r: Math.random()*(CFG.rMax-CFG.rMin)+CFG.rMin, p: Math.random()*Math.PI*2 };
   }
 
-  function init() { resize(); nodes = []; for (let i=0;i<CFG.nodeCount;i++) nodes.push(mkNode()); }
+  function init() { 
+    CFG.nodeCount = window.innerWidth < 768 ? 40 : 110;
+    resize(); 
+    nodes = []; 
+    for (let i=0;i<CFG.nodeCount;i++) nodes.push(mkNode()); 
+  }
 
   window.addEventListener('mousemove', e => {
     mouse.x = e.clientX; mouse.y = e.clientY;

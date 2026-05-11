@@ -257,6 +257,7 @@ body {
 
 .hero-image {
     animation: fadeInRight 1s ease-out;
+    min-width: 0;
 }
 
 .coding-panel {
@@ -332,8 +333,15 @@ body {
     color: #3b82f6;
     font-size: 1rem;
     line-height: 1.6;
-    white-space: pre-wrap;
     text-align: left;
+    overflow-x: auto;
+}
+.panel-body pre {
+    white-space: pre;
+    overflow-x: auto;
+}
+.panel-body code {
+    white-space: pre;
 }
 .cursor {
     animation: blink 1s step-end infinite;
