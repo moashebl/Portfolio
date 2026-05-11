@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mohamed Alaa - Software Engineer</title>
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>💻</text></svg>">
@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Neural Network Canvas Background -->
+    <canvas id="neuralCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;display:block;pointer-events:none;"></canvas>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
@@ -34,7 +37,8 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-content">
+
+        <div class="hero-content" style="position:relative;z-index:1;">
             <div class="hero-text">
                 <p class="greeting">Hello, I'm</p>
                 <h1 class="name">Mohamed Alaa</h1>
@@ -52,16 +56,32 @@
                 </div>
             </div>
             <div class="hero-image">
-                <div class="image-frame">
-                    <div class="image-placeholder">
-                        <i class="fas fa-code"></i>
+                <div class="coding-panel">
+                    <div class="panel-header">
+                        <div class="mac-btns">
+                            <span class="mac-btn close"></span>
+                            <span class="mac-btn minimize"></span>
+                            <span class="mac-btn maximize"></span>
+                        </div>
+                        <div class="panel-tabs">
+                            <button class="panel-tab active" id="tab-code">main.py</button>
+                            <button class="panel-tab" id="tab-output">Output</button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div id="code-view">
+                            <pre><code id="typing-code"></code><span class="cursor">_</span></pre>
+                        </div>
+                        <div id="output-view" style="display: none;">
+                            <p class="cmd">> python main.py</p>
+                            <p id="output-text" style="display: none;">MOHAMED ALAA SHEBL</p>
+                            <p id="output-cursor" style="display: none;"><span class="cursor">_</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="scroll-down">
-            <a href="#about"><i class="fas fa-chevron-down"></i></a>
-        </div>
+
     </section>
 
     <!-- About Section -->
@@ -327,81 +347,109 @@
                 <p>Here are some of my recent projects showcasing my skills and expertise</p>
             </div>
             <div class="projects-grid">
-                <div class="project-card" onclick="window.open('https://github.com/moashebl/Native', '_blank')">
+                <!-- Native -->
+                <div class="project-card" data-project="native">
                     <div class="project-image">
-                        <i class="fas fa-mobile-alt"></i>
+                        <img src="projects screenshots/Native/Screenshot 2025-10-18 235359.png" alt="Native Clothiers">
                     </div>
                     <div class="project-content">
                         <h3>Native Clothiers</h3>
                         <h4>WEB-SITE</h4>
-                        <p>A responsive and modern web application built using Next.js and TypeScript. The project was bootstrapped with create-next-app and focuses on clean design, performance optimization, and scalability. It incorporates CSS and JavaScript for enhanced interactivity and styling, and utilizes the next/font module to optimize font loading with the Geist font family.</p>
+                        <p>A responsive and modern web application built using Next.js and TypeScript.</p>
                         <div class="project-tags">
-                            <span>Next.js</span>
-                            <span>TypeScript</span>
-                            <span>JavaScript</span>
-                            <span>CSS</span>
-                            <span>next/font</span>
+                            <span>Next.js</span><span>TypeScript</span><span>CSS</span>
                         </div>
-                        <a href="https://github.com/moashebl/Native" target="_blank" class="project-link">
+                        <a href="https://github.com/moashebl/Native" target="_blank" class="project-link" onclick="event.stopPropagation()">
                             <i class="fab fa-github"></i> View on GitHub
                         </a>
                     </div>
                 </div>
 
-                <div class="project-card" onclick="window.open('https://github.com/moashebl/Task-Manager', '_blank')">
+                <!-- FreshChain -->
+                <div class="project-card" data-project="freshchain">
                     <div class="project-image">
-                        <i class="fas fa-tasks"></i>
+                        <img src="projects screenshots/FreshChain/Screenshot 2025-12-11 010123.png" alt="FreshChain">
+                    </div>
+                    <div class="project-content">
+                        <h3>FreshChain</h3>
+                        <h4>Blockchain Supply Chain</h4>
+                        <p>Decentralized food supply chain tracking system on Ethereum Sepolia testnet.</p>
+                        <div class="project-tags">
+                            <span>Solidity</span><span>Ethereum</span><span>Hardhat</span>
+                        </div>
+                        <a href="https://github.com/moashebl/FreshChain" target="_blank" class="project-link" onclick="event.stopPropagation()">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Neural Network Character Recognition -->
+                <div class="project-card" data-project="ann">
+                    <div class="project-image">
+                        <img src="projects screenshots/Character recognation/main gui.jpeg" alt="ANN Character Recognition">
+                    </div>
+                    <div class="project-content">
+                        <h3>Neural Network Character Recognition</h3>
+                        <h4>Deep Learning & GUI App</h4>
+                        <p>From-scratch MLP using NumPy for handwritten character recognition with a Tkinter GUI.</p>
+                        <div class="project-tags">
+                            <span>Python</span><span>NumPy</span><span>Tkinter</span>
+                        </div>
+                        <a href="https://github.com/moashebl/Character-Recognition" target="_blank" class="project-link" onclick="event.stopPropagation()">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Student Performance Prediction -->
+                <div class="project-card" data-project="student-performance">
+                    <div class="project-image">
+                        <img src="projects screenshots/Student Performance Prediction/ml_dashboard.png" alt="Student Performance Prediction">
+                    </div>
+                    <div class="project-content">
+                        <h3>Student Performance Prediction</h3>
+                        <h4>Machine Learning Analytics</h4>
+                        <p>End-to-end predictive analytics using Random Forests to forecast student outcomes.</p>
+                        <div class="project-tags">
+                            <span>Python</span><span>Scikit-Learn</span><span>Pandas</span>
+                        </div>
+                        <a href="https://github.com/moashebl/Student_Performance_Prediction" target="_blank" class="project-link" onclick="event.stopPropagation()">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Task Manager -->
+                <div class="project-card" data-project="task-manager">
+                    <div class="project-image">
+                        <img src="projects screenshots/Task Manager/dashboard.png" alt="Task Manager">
                     </div>
                     <div class="project-content">
                         <h3>Task Manager</h3>
                         <h4>Full-Stack Web Application</h4>
-                        <p>A simple task management web application built with Node.js and Express.js. The project separates backend server logic with a backend server (server.js) and a frontend served through static files. It enables users to manage their tasks efficiently through a browser interface. Deployed on Glitch for easy access and testing.</p>
+                        <p>A simple task management web application built with Node.js and Express.js.</p>
                         <div class="project-tags">
-                            <span>Node.js</span>
-                            <span>Express.js</span>
-                            <span>HTML</span>
-                            <span>CSS</span>
-                            <span>JavaScript</span>
+                            <span>Node.js</span><span>Express.js</span><span>HTML</span>
                         </div>
-                        <div class="project-highlights">
-                            <p><strong>Project Structure:</strong></p>
-                            <ul>
-                                <li>server.js: Handles server logic and routing</li>
-                                <li>public/: Contains static frontend assets</li>
-                                <li>data/: Stores task-related data</li>
-                                <li>package.json: Manages dependencies and project scripts</li>
-                            </ul>
-                        </div>
-                        <a href="https://github.com/moashebl/Task-Manager" target="_blank" class="project-link">
+                        <a href="https://github.com/moashebl/Task-Manager" target="_blank" class="project-link" onclick="event.stopPropagation()">
                             <i class="fab fa-github"></i> View on GitHub
                         </a>
                     </div>
                 </div>
 
-                <div class="project-card" onclick="window.open('https://github.com/moashebl/Student-management-System', '_blank')">
+                <!-- Student Management System -->
+                <div class="project-card" data-project="student-management">
                     <div class="project-image">
-                        <i class="fas fa-graduation-cap"></i>
+                        <img src="projects screenshots/Student Management System/cli.png" alt="Student Management System">
                     </div>
                     <div class="project-content">
                         <h3>Student Management System</h3>
-                        <h4>Console-Based Java Application</h4>
-                        <p>A console-based application developed in Java to manage student records and their associated courses. The system supports full CRUD operations, persistent binary file storage, and adopts object-oriented design principles including inheritance and abstraction for flexible data handling.</p>
+                        <h4>Console-Based Java App</h4>
+                        <p>A console-based application developed in Java to manage student records and courses.</p>
                         <div class="project-tags">
-                            <span>Java</span>
-                            <span>OOP</span>
-                            <span>File I/O</span>
-                            <span>CRUD</span>
+                            <span>Java</span><span>OOP</span><span>File I/O</span>
                         </div>
-                        <div class="project-highlights">
-                            <p><strong>Key Features:</strong></p>
-                            <ul>
-                                <li><strong>Student & Course Management:</strong> Create, search, update, and delete students with unique IDs and associated courses</li>
-                                <li><strong>Binary File Storage:</strong> Efficient reading/writing of student data using FileInputStream and FileOutputStream</li>
-                                <li><strong>Menu-Driven Interface:</strong> Interactive console menu for easy navigation and operations</li>
-                                <li><strong>Data Transfer Abstraction:</strong> Uses an abstract DataTransfer class with Email and ToFile subclasses to simulate multiple data export options</li>
-                            </ul>
-                        </div>
-                        <a href="https://github.com/moashebl/Student-management-System" target="_blank" class="project-link">
+                        <a href="https://github.com/moashebl/Student-management-System" target="_blank" class="project-link" onclick="event.stopPropagation()">
                             <i class="fab fa-github"></i> View on GitHub
                         </a>
                     </div>
@@ -472,7 +520,7 @@
                 </div>
 
                 <div class="contact-form">
-                    <form id="contactForm">
+                    <form id="contactForm" action="https://formspree.io/f/xaqvaypr" method="POST">
                         <div class="form-group">
                             <input type="text" id="name" name="name" placeholder="Your Name" required>
                         </div>
@@ -486,6 +534,7 @@
                             <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Send Message</button>
+                        <p id="form-status"></p>
                     </form>
                 </div>
             </div>
@@ -508,6 +557,26 @@
             </div>
         </div>
     </footer>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <img id="modal-img-main" src="" alt="Project Screenshot">
+                    <div class="modal-thumbnails" id="modal-thumbnails"></div>
+                </div>
+                <div class="modal-info">
+                    <h2 id="modal-title">Project Title</h2>
+                    <h4 id="modal-subtitle">Project Subtitle</h4>
+                    <div id="modal-description" class="modal-desc"></div>
+                    <div class="project-tags" id="modal-tags"></div>
+                    <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="margin-top:1.5rem; position: relative; z-index: 100; cursor: pointer;"><i class="fab fa-github"></i> View Repository</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
